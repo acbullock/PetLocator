@@ -3,6 +3,9 @@ firebase.initializeApp(config);
 var queryURL = "http://api.petfinder.com/pet.find";
 var key = "e5945be700ddfa206a0f57f1f6066743";
 var pets=[];var debug;
+var addFavorite = function(pets, index){
+  alert("the button works");
+}
 var createWellForResult = function(index, pet){
 	var well = $("<div>");
 	well.addClass("well");
@@ -50,8 +53,16 @@ var createWellForResult = function(index, pet){
     var phone = $("<h3>");
     phone.css("font-weight", "bold");
     phone.html(" Phone: "+pet.contact.phone.$t);
+
+    var favButton = $("<button>");
+    favButton.addClass("btn btn-info fav-btn");
+    favButton.text("Add to Favorites!")
+    favButton.attr("data-index", index);
     
-    well.attr("data-index", index);
+    favButton.on("click", function(){
+      //call function that adds to firebase
+      addFavorite(pets, index);
+    });
 
     well.append(nameHeader);
     well.append(age);
@@ -61,6 +72,7 @@ var createWellForResult = function(index, pet){
     well.append(about);
     well.append(email);
     well.append(phone);
+    well.append(favButton);
 	$("#results-panel").append(well);
 }
 
@@ -101,7 +113,7 @@ $("#find-btn").on("click", function(event){
 		queryURL+="&sex="+animalSex;
 	}
 	queryURL+="&location="+zipCode+"&callback=?";
-  
+  console.log("query: "+queryURL);
 	$.getJSON(queryURL)
   .done(function(petApiData) { 
     debug=petApiData;
