@@ -41,7 +41,7 @@ var createWellForResult = function(index, pet){
 
     var email = $("<h3>");
     email.css("font-weight", "bold");
-    console.log(pet);
+    //console.log(pet);
     email.html("Email: "+pet.contact.email.$t);
 
     var phone = $("<h3>");
@@ -59,13 +59,7 @@ var createWellForResult = function(index, pet){
     well.append(phone);
 	$("#results-panel").append(well);
 }
-var queryURL = "http://api.petfinder.com/pet.find?format=json&key=";
-var key = "e5945be700ddfa206a0f57f1f6066743";
-var animalType="";
-var animalSize="";
-var animalSex="";
-var zipCode="";
-queryURL += key;
+
 
 $("#find-btn").prop("disabled", true);
 document.onkeyup = function(){
@@ -77,8 +71,18 @@ document.onkeyup = function(){
 		$("#find-btn").prop("disabled", true);
 }
 $("#find-btn").on("click", function(event){
+  var queryURL = "http://api.petfinder.com/pet.find?format=json&key=";
+  var key = "e5945be700ddfa206a0f57f1f6066743";
+  var animalType="";
+  var animalSize="";
+  var animalSex="";
+  var zipCode="";
+  queryURL += key;
+  
 	event.preventDefault();
+  $("#results-panel").html("");
 	animalType = $("#animal-type-input").val().trim();
+
 	animalSize = $("#animal-size-input").val().trim();
 	animalSex = $("#animal-sex-input").val().trim();
 	zipCode = $("#zip-code-input").val().trim();
@@ -92,11 +96,12 @@ $("#find-btn").on("click", function(event){
 		queryURL+="&sex="+animalSex;
 	}
 	queryURL+="&location="+zipCode+"&callback=?";
+  console.log(queryURL);
 	$.getJSON(queryURL)
   .done(function(petApiData) { 
   	//console.log(petApiData.petfinder.pets); 
   	var pets = petApiData.petfinder.pets.pet;
-  	$("#results-panel").html("");
+  	
   	$.each(pets, function(index, value){
   		createWellForResult(index, value);
   	});
