@@ -18,6 +18,14 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
+				<nav class="navbar navbar-default">
+				  	<div class="container-fluid">
+						<div class="navbar-header">
+							<button type="button" class="btn btn-default navbar-btn" id="btn-logIn">Log in</button>
+					  		<button type="button" class="btn btn-default navbar-btn" id="btn-logOut">Log out</button>
+						</div>
+				  	</div>
+				</nav>
 				<div class="jumbotron">
 					<h1 class="text-center">Pet Locator</h1>
 				</div>
@@ -138,32 +146,32 @@
 							<br>
 							<form>
 								<div class="form-group">
-									<label for="exampleInputEmail1">Email address</label>
-									<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+									<label for="formEmailLogIn">Email address</label>
+									<input type="email" class="form-control" id="formEmailLogIn" placeholder="Email">
 								</div>
 								<div class="form-group">
-									<label for="exampleInputPassword1">Password</label>
-									<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+									<label for="formPassLogIn">Password</label>
+									<input type="password" class="form-control" id="formPassLogIn" placeholder="Password">
 								</div>
-								<button type="submit" class="btn btn-default">Log in</button>
+								<button type="submit" class="btn btn-default" id="btnLogIn">Log in</button>
 							</form>
 						</div>
 						<div id="signUp" class="tab-pane fade">
-						  	<br>
+							<br>
 							<form>
 								<div class="form-group">
-									<label for="exampleInputEmail1">Costumer Name</label>
-									<input type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
+									<label for="formNameSignUp">Costumer Name</label>
+									<input type="text" class="form-control" id="formNameSignUp" placeholder="i.e John Doe">
 								</div>
 								<div class="form-group">
-									<label for="exampleInputEmail1">Email address</label>
-									<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+									<label for="formEmailSignUp">Email address</label>
+									<input type="email" class="form-control" id="formEmailSignUp" placeholder="Email">
 								</div>
 								<div class="form-group">
-									<label for="exampleInputPassword1">Password</label>
-									<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+									<label for="formPassSignUp">Password</label>
+									<input type="password" class="form-control" id="formPassSignUp" placeholder="Password">
 								</div>
-								<button type="submit" class="btn btn-default">Sign up</button>
+								<button type="submit" class="btn btn-default" id="btnSignUp">Sign up</button>
 							</form>
 						</div>
 						

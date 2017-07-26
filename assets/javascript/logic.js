@@ -140,8 +140,93 @@ $("#find-btn").on("click", function(event){
 
 });
 
-/// modal for the sign in 
+// ****************************
+// after page is ready show modal for the sign in 
+// ****************************
 $(document).ready(function() {
 	console.log("im ready");
-	$("#myModal").modal('toggle');
+	
 });
+
+// ****************************
+// creates event for the sign up of the costumer
+// TODO: need to add a costumer to the database and 
+// use the name of the form 
+// ****************************
+$("#btnSignUp").on("click", function(e) {
+	e.preventDefault();
+	var email = $("#formEmailSignUp").val();
+	var name = $("#formNameSignUp").val();
+	var pass = $("#formPassSignUp").val();
+
+	console.log(email + " " + pass);
+
+	var promise = firebase.auth().createUserWithEmailAndPassword(email, pass);
+	promise
+	.then(function(){
+		
+		promise.displayName = name;
+	})
+	.catch(function(e) {
+		console.log(e.message);
+	})
+
+	
+});
+
+// ****************************
+// creates event for the log in 
+// grabs email and password and tries to 
+// match with firebase 
+// TODO: 
+// - how to react when wrong input
+// ****************************
+$("#btnLogIn").on("click", function(e) {
+	e.preventDefault();
+	var email = $("#formEmailLogIn").val();
+	var pass = $("#formPassLogIn").val();
+
+	console.log(email + " " + pass);
+
+	var promise = firebase.auth().signInWithEmailAndPassword(email, pass);
+	promise
+	.catch(function(e) {
+		alert(e.message);
+		
+	})
+	$("#myModal").modal("hide");
+	
+});
+
+// ****************************
+// if user is logged in then it should import history
+// and show to screen
+// TODO: 
+// - if user is logged in have variables from that user with the 
+//   history
+//  
+// ****************************
+firebase.auth().onAuthStateChanged(function(user) {
+	if (user) {
+		console.log(user);
+	}
+	else {
+
+		$("#myModal").modal('show');
+	}
+});
+
+
+$("#btn-logIn").on("click", function(e) {
+	e.preventDefault();
+	$("#myModal").modal('show');
+});
+
+$("#btn-logOut").on("click", function(e) {
+	e.preventDefault();
+	
+	firebase.auth().signOut();
+	
+});
+
+
