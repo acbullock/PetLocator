@@ -1,0 +1,117 @@
+<!DOCTYPE>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+	<title>Document</title>
+	<!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+      <link rel="stylesheet" href="assets/css/font-awesome-4.7.0/css/font-awesome.min.css" >
+
+    <!-- Firebase Reference -->
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h2 class="panel-title">Pet Locator</h2>
+					</div>
+					<div class="panel-body">
+						<form>
+							<div class="form-group">
+								<label>Animal Type</label>
+									
+								<select class="form-control"  id="animal-type-input">
+									<option>show all</option>
+									<option>barnyard</option>
+									<option>bird</option>
+									<option>cat</option>
+									<option>dog</option>
+									<option>horse</option>
+									<option>reptile</option>
+									<option>smallfurry</option>
+
+								</select>
+								
+							</div>
+							<div class="form-group">
+								<label>Size</label>
+									
+								<select class="form-control"  id="animal-size-input">
+									<option>All Sizes</option>
+									<option>S</option>
+									<option>M</option>
+									<option>L</option>
+									<option>XL</option>
+									
+									
+								</select>
+								
+							</div>
+							<div class="form-group">
+								<label>Sex</label>
+									
+								<select class="form-control"  id="animal-sex-input">
+									<option>Show Both</option>
+									<option>M</option>
+									<option>F</option>
+									
+									
+								</select>
+								
+							</div>
+							<div class="form-group">
+								<label>5-Digit Zip Code (Required)</label>
+									
+								<input class="form-control"  placeholder="33313" id="zip-code-input"/>
+									
+								
+							</div>
+							<button id="find-btn" class="btn btn-primary">Find Pets!</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h2 class="panel-title">Search Results</h2>
+					</div>
+					<div id="results-panel" class="panel-body">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-md-12">
+				<div id="mapContainer">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+	<!-- <div class="container">
+		
+	</div>
+	 -->
+</body>
+<script src="assets/javascript/logic.js"></script>
+</html>
