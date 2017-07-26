@@ -3,6 +3,9 @@ firebase.initializeApp(config);
 var queryURL = "http://api.petfinder.com/pet.find";
 var key = "e5945be700ddfa206a0f57f1f6066743";
 var pets=[];var debug;
+var addFavorite = function(pets, index){
+  alert("the button works");
+}
 var createWellForResult = function(index, pet){
 	var well = $("<div>");
 	well.addClass("well");
@@ -24,43 +27,54 @@ var createWellForResult = function(index, pet){
 		}
 		
 	
-		var nameHeader = $("<h2>");
-			nameHeader.html(pet.name.$t);
 
-		var age = $("<h3>");
-		age.html("Age: "+pet.age.$t);
+    var nameHeader = $("<h2>");
+	    nameHeader.html(pet.name.$t);
 
-		var sex = $("<h3>");
-		sex.html("Sex: " +pet.sex.$t);
+    var age = $("<h3>");
+    age.html("Age: "+pet.age.$t);
 
-		var breed=$("<h3>");
-		breed.html("Breed: "+pet.breeds.breed.$t);
-		
-		var mix = $("<h3>");
-		mix.html("Mix Breed: "+pet.mix.$t);
+    var sex = $("<h3>");
+    sex.html("Sex: " +pet.sex.$t);
 
-		var about = $("<p>");
-		about.html("About: " + pet.description.$t);
+    var breed=$("<h3>");
+    breed.html("Breed: "+pet.breeds.breed.$t);
+    
+    var mix = $("<h3>");
+    mix.html("Mix Breed: "+pet.mix.$t);
 
-		var email = $("<h3>");
-		email.css("font-weight", "bold");
-		//console.log(pet);
-		email.html("Email: "+pet.contact.email.$t);
+    var about = $("<p>");
+    about.html("About: " + pet.description.$t);
 
-		var phone = $("<h3>");
-		phone.css("font-weight", "bold");
-		phone.html(" Phone: "+pet.contact.phone.$t);
-		
-		well.attr("data-index", index);
+    var email = $("<h3>");
+    email.css("font-weight", "bold");
+    //console.log(pet);
+    email.html("Email: "+pet.contact.email.$t);
 
-		well.append(nameHeader);
-		well.append(age);
-		well.append(sex);
-		well.append(breed);
-		well.append(mix);
-		well.append(about);
-		well.append(email);
-		well.append(phone);
+    var phone = $("<h3>");
+    phone.css("font-weight", "bold");
+    phone.html(" Phone: "+pet.contact.phone.$t);
+
+    var favButton = $("<button>");
+    favButton.addClass("btn btn-info fav-btn");
+    favButton.text("Add to Favorites!")
+    favButton.attr("data-index", index);
+    
+    favButton.on("click", function(){
+      //call function that adds to firebase
+      addFavorite(pets, index);
+    });
+
+    well.append(nameHeader);
+    well.append(age);
+    well.append(sex);
+    well.append(breed);
+    well.append(mix);
+    well.append(about);
+    well.append(email);
+    well.append(phone);
+    well.append(favButton);
+
 	$("#results-panel").append(well);
 }
 
@@ -101,7 +115,11 @@ $("#find-btn").on("click", function(event){
 		queryURL+="&sex="+animalSex;
 	}
 	queryURL+="&location="+zipCode+"&callback=?";
+
 	
+
+  console.log("query: "+queryURL);
+
 	$.getJSON(queryURL)
 	.done(function(petApiData) { 
 		debug=petApiData;
