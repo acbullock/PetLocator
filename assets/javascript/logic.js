@@ -39,10 +39,14 @@ var createWellForResult = function(index, pet){
     var mix = $("<h3>");
     mix.html("Mix Breed: "+pet.mix.$t);
 
-    var contact = $("<h3>");
-    contact.css("font-weight", "bold");
+    var email = $("<h3>");
+    email.css("font-weight", "bold");
     console.log(pet);
-    contact.html("Contact: "+pet.contact.phone.$t);
+    email.html("Email: "+pet.contact.email.$t);
+
+    var phone = $("<h3>");
+    phone.css("font-weight", "bold");
+    phone.html(" Phone: "+pet.contact.phone.$t);
     
     
 
@@ -51,7 +55,8 @@ var createWellForResult = function(index, pet){
     well.append(sex);
     well.append(breed);
     well.append(mix);
-    well.append(contact);
+    well.append(email);
+    well.append(phone);
 	$("#results-panel").append(well);
 }
 var queryURL = "http://api.petfinder.com/pet.find?format=json&key=";
