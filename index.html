@@ -24,7 +24,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-3">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h2 class="panel-title">Pet Locator</h2>
@@ -80,14 +80,35 @@
 									
 								
 							</div>
+							<div>
 							<button id="find-btn" class="btn btn-primary">Find Pets!</button>
+							<button id="clear-btn" class="btn btn-default">Clear Search Results</button></div><br/>
+							<div>
+								<button id="view-fav-btn" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">View Favorites</button>
+								<!-- Modal -->
+								<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+								  <div class="modal-dialog" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								        <h4 class="modal-title" id="myModalLabel">Your Favorites</h4>
+								      </div>
+								      <div id="favorites-section" class="modal-body">
+								        
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								        
+								      </div>
+								    </div>
+								  </div>
+								</div>
+							</div>
 						</form>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-9">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h2 class="panel-title">Search Results</h2>
@@ -98,7 +119,11 @@
 				</div>
 			</div>
 		</div>
-
+		<div class="row">
+			
+			
+		</div>
+		
 
 		<div class="row">
 			<div class="col-md-12">

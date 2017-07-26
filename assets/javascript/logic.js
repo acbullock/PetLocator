@@ -1,10 +1,46 @@
 firebase.initializeApp(config);
+var database = firebase.database().ref();
+
+var userID = "user1";//TO DO: GET FROM FIREBASE AUTHENTICATION (GET CURRENT USER)
+var userRef = firebase.database().ref("/"+userID);
+userRef.child("email").set("user1@gmail.com");
 
 var queryURL = "http://api.petfinder.com/pet.find";
 var key = "e5945be700ddfa206a0f57f1f6066743";
 var pets=[];var debug;
 var addFavorite = function(pets, index){
-  alert("the button works");
+  var pet = pets[index];
+
+  var name = pet.name.$t;
+  var age = pet.age.$t;
+  var sex = pet.sex.$t;
+  var breed = pet.breeds.breed.$t;
+  if(breed == undefined)
+    breed="not available";
+  var mix = pet.mix.$t;
+  var description = pet.description.$t;
+  var email = pet.contact.email.$t;
+  var phone = pet.contact.phone.$t;
+
+  
+  if(pet.media.photos == null){
+    alert("hey");
+  }
+  //replace dog with fave object
+  userRef.child("favorites").child(name).set({
+    name: name,
+    age: age,
+    sex: sex,
+    breed: breed,
+    mix: mix,
+    description: description,
+    email: email,
+    phone: phone,
+    photo:pet.media.photos.photo[0].$t
+
+  });
+  
+
 }
 var createWellForResult = function(index, pet){
 	var well = $("<div>");
@@ -64,6 +100,7 @@ var createWellForResult = function(index, pet){
       addFavorite(pets, index);
     });
 
+
     well.append(nameHeader);
     well.append(age);
     well.append(sex);
@@ -117,7 +154,7 @@ $("#find-btn").on("click", function(event){
 	$.getJSON(queryURL)
   .done(function(petApiData) { 
     debug=petApiData;
-    console.log(petApiData);
+   // console.log(petApiData);
   	if(petApiData.petfinder.pets !== undefined){
       pets = petApiData.petfinder.pets.pet;
       $.each(pets, function(index, value){
@@ -131,5 +168,104 @@ $("#find-btn").on("click", function(event){
   	
   	
   });
+
+  $("#clear-btn").on("click", function(event){
+    event.preventDefault();
+    $("#results-panel").html("");
+  });
+
+});
+
+
+userRef.child("favorites").on("value", function(snapshot){
+    $("#favorites-section").html("");
+    var favs =snapshot.val();
+    console.log(favs);
+    $.each(favs, function(index, value){
+      //  console.log("index" + value.name);
+      var name = value.name;
+      var age = value.age;
+      var sex = value.sex;
+      var breed = value.breed;
+      if(breed == undefined)
+        breed="not available";
+      var mix = value.mix;
+      var description = value.description;
+      var email = value.email;
+      var phone = value.phone;
+
+
+          var well = $("<div>");
+  well.addClass("well");
+  var img = $("<img>");
+  userRef.child("favorites").child(name).child("photo").once("value").then(function(snapshot){
+    img.attr("src", snapshot.val());
+  });
+  //console.log(img.attr("src"));
+
+var nameHeader = $("<h2>");
+      nameHeader.html(name);
+
+    var ageHeader = $("<h3>");
+    ageHeader.html("Age: "+age);
+
+    var sexHeader = $("<h3>");
+    sexHeader.html("Sex: " +sex);
+
+    var breedHeader=$("<h3>");
+    breedHeader.html("Breed: "+breed);
+    
+    var mixHeader = $("<h3>");
+    mixHeader.html("Mix Breed: "+mix);
+
+    var aboutHeader = $("<p>");
+    aboutHeader.html("About: " + description );
+
+    var emailHeader = $("<h3>");
+    emailHeader.css("font-weight", "bold");
+    //console.log(pet);
+    emailHeader.html("Email: "+email);
+
+    var phoneHeader = $("<h3>");
+    phoneHeader.css("font-weight", "bold");
+    phoneHeader.html("Phone: "+phone);
+
+    var removeBtn = $("<button>");
+    removeBtn.text("Remove from Favorites");
+    removeBtn.addClass("remove-fave btn btn-danger");
+      
+    removeBtn.attr("data-key", name);
+    
+
+      removeBtn.on("click", function(event){
+        
+          //event.preventDefault();
+          var rem = $(this).attr("data-key");
+          
+          userRef.child("favorites").child(rem).remove();
+      });
+
+  console.log(img.attr('src'));
+  well.append(removeBtn );
+   well.append($("<br>"));
+   well.append($("<br>"));
+
+  well.append(img);
+  well.append(nameHeader);
+  well.append(ageHeader);
+  well.append(sexHeader);
+  well.append(breedHeader);
+  well.append(mixHeader);
+  well.append(aboutHeader);
+  well.append(emailHeader);
+  well.append(phoneHeader);
+ // well.append(img);
+
+  $("#favorites-section").append(well);
+
+    });
+
+
+
 
 });
