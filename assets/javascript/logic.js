@@ -8,59 +8,59 @@ var createWellForResult = function(index, pet){
 	well.addClass("well");
 
 	var number = $("<label>");
-    number.addClass("fa-stack fa-lg");
-    number.append($("<i class='fa fa-square fa-stack-2x'></i>"));
-    number.append($("<i class='fa fa-inverse fa-stack-1x'>"+(index+1)+"</i>"));
-    well.append(number);
+		number.addClass("fa-stack fa-lg");
+		number.append($("<i class='fa fa-square fa-stack-2x'></i>"));
+		number.append($("<i class='fa fa-inverse fa-stack-1x'>"+(index+1)+"</i>"));
+		well.append(number);
 
-   		if(pet.media.photos!== undefined){
-   			for(var i = 1; i < pet.media.photos.photo.length; i+=5){
-    			var photo = $("<img>");
-			    photo.attr("src", pet.media.photos.photo[i].$t);
-			    photo.css("padding", "10px");
-			    well.append(photo);
-    		}
+			if(pet.media.photos!== undefined){
+				for(var i = 1; i < pet.media.photos.photo.length; i+=5){
+					var photo = $("<img>");
+					photo.attr("src", pet.media.photos.photo[i].$t);
+					photo.css("padding", "10px");
+					well.append(photo);
+				}
 
 		}
 		
 	
-    var nameHeader = $("<h2>");
-	    nameHeader.html(pet.name.$t);
+		var nameHeader = $("<h2>");
+			nameHeader.html(pet.name.$t);
 
-    var age = $("<h3>");
-    age.html("Age: "+pet.age.$t);
+		var age = $("<h3>");
+		age.html("Age: "+pet.age.$t);
 
-    var sex = $("<h3>");
-    sex.html("Sex: " +pet.sex.$t);
+		var sex = $("<h3>");
+		sex.html("Sex: " +pet.sex.$t);
 
-    var breed=$("<h3>");
-    breed.html("Breed: "+pet.breeds.breed.$t);
-    
-    var mix = $("<h3>");
-    mix.html("Mix Breed: "+pet.mix.$t);
+		var breed=$("<h3>");
+		breed.html("Breed: "+pet.breeds.breed.$t);
+		
+		var mix = $("<h3>");
+		mix.html("Mix Breed: "+pet.mix.$t);
 
-    var about = $("<p>");
-    about.html("About: " + pet.description.$t);
+		var about = $("<p>");
+		about.html("About: " + pet.description.$t);
 
-    var email = $("<h3>");
-    email.css("font-weight", "bold");
-    //console.log(pet);
-    email.html("Email: "+pet.contact.email.$t);
+		var email = $("<h3>");
+		email.css("font-weight", "bold");
+		//console.log(pet);
+		email.html("Email: "+pet.contact.email.$t);
 
-    var phone = $("<h3>");
-    phone.css("font-weight", "bold");
-    phone.html(" Phone: "+pet.contact.phone.$t);
-    
-    well.attr("data-index", index);
+		var phone = $("<h3>");
+		phone.css("font-weight", "bold");
+		phone.html(" Phone: "+pet.contact.phone.$t);
+		
+		well.attr("data-index", index);
 
-    well.append(nameHeader);
-    well.append(age);
-    well.append(sex);
-    well.append(breed);
-    well.append(mix);
-    well.append(about);
-    well.append(email);
-    well.append(phone);
+		well.append(nameHeader);
+		well.append(age);
+		well.append(sex);
+		well.append(breed);
+		well.append(mix);
+		well.append(about);
+		well.append(email);
+		well.append(phone);
 	$("#results-panel").append(well);
 }
 
@@ -68,24 +68,24 @@ var createWellForResult = function(index, pet){
 $("#find-btn").prop("disabled", true);
 document.onkeyup = function(){
 	if ( /^[0-9]{5}$/.test($("#zip-code-input").val().trim())) {
-  		$("#find-btn").prop("disabled", false);
+			$("#find-btn").prop("disabled", false);
 
 	}
 	else
 		$("#find-btn").prop("disabled", true);
 }
 $("#find-btn").on("click", function(event){
-  var queryURL = "http://api.petfinder.com/pet.find?format=json&key=";
-  var key = "e5945be700ddfa206a0f57f1f6066743";
-  var animalType="";
-  var animalSize="";
-  var animalSex="";
+	var queryURL = "http://api.petfinder.com/pet.find?format=json&key=";
+	var key = "e5945be700ddfa206a0f57f1f6066743";
+	var animalType="";
+	var animalSize="";
+	var animalSex="";
 
-  var zipCode="";
-  queryURL += key;
-  
+	var zipCode="";
+	queryURL += key;
+	
 	event.preventDefault();
-  $("#results-panel").html("");
+	$("#results-panel").html("");
 	animalType = $("#animal-type-input").val().trim();
 
 	animalSize = $("#animal-size-input").val().trim();
@@ -101,23 +101,29 @@ $("#find-btn").on("click", function(event){
 		queryURL+="&sex="+animalSex;
 	}
 	queryURL+="&location="+zipCode+"&callback=?";
-  
+	
 	$.getJSON(queryURL)
-  .done(function(petApiData) { 
-    debug=petApiData;
-    console.log(petApiData);
-  	if(petApiData.petfinder.pets !== undefined){
-      pets = petApiData.petfinder.pets.pet;
-      $.each(pets, function(index, value){
-      createWellForResult(index, value);
-      });
-    } 
-    else{
-      $("#results-panel").html("No results. Please try again.");
-    }
-  	
-  	
-  	
-  });
+	.done(function(petApiData) { 
+		debug=petApiData;
+		console.log(petApiData);
+		if(petApiData.petfinder.pets !== undefined){
+			pets = petApiData.petfinder.pets.pet;
+			$.each(pets, function(index, value){
+			createWellForResult(index, value);
+			});
+		} 
+		else{
+			$("#results-panel").html("No results. Please try again.");
+		}
+		
+		
+		
+	});
 
+});
+
+/// modal for the sign in 
+$(document).ready(function() {
+	console.log("im ready");
+	$("#myModal").modal('toggle');
 });
