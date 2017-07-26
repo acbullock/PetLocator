@@ -19,13 +19,16 @@ var addFavorite = function(pets, index){
     breed="not available";
   var mix = pet.mix.$t;
   var description = pet.description.$t;
-  var email = pet.contact.email.$t;
-  var phone = pet.contact.phone.$t;
-
-  
-  if(pet.media.photos == null){
-    alert("hey");
+  var email ="unavailable";
+    if(pet.contact.email.$t !==undefined)
+      email =pet.contact.email.$t;
+    console.log(pet);
+  var phone = "unavailable";
+  if(pet.contact.phone.$t !== undefined){
+    phone= pet.contact.phone.$t;
   }
+  alert(phone + "  " +email);
+  
   //replace dog with fave object
   userRef.child("favorites").child(name).set({
     name: name,
@@ -83,12 +86,20 @@ var createWellForResult = function(index, pet){
 
     var email = $("<h3>");
     email.css("font-weight", "bold");
+    var emailText = "unavailable";
+    if(pet.contact.email.$t !== undefined){
+      emailText = pet.contact.email.$t;
+    }
     //console.log(pet);
-    email.html("Email: "+pet.contact.email.$t);
+    email.html("Email: "+emailText );
 
     var phone = $("<h3>");
     phone.css("font-weight", "bold");
-    phone.html(" Phone: "+pet.contact.phone.$t);
+    var phoneText = "unavailable";
+    if(pet.contact.phone.$t !== undefined){
+      phoneText = pet.contact.phone.$t;
+    }
+    phone.html(" Phone: "+phoneText);
 
     var favButton = $("<button>");
     favButton.addClass("btn btn-info fav-btn");
