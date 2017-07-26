@@ -2,7 +2,7 @@
 
 var queryURL = "http://api.petfinder.com/pet.find";
 var key = "e5945be700ddfa206a0f57f1f6066743";
-
+var pets=[];var debug;
 var createWellForResult = function(index, pet){
 	var well = $("<div>");
 	well.addClass("well");
@@ -51,7 +51,7 @@ var createWellForResult = function(index, pet){
     phone.css("font-weight", "bold");
     phone.html(" Phone: "+pet.contact.phone.$t);
     
-    
+    well.attr("data-index", index);
 
     well.append(nameHeader);
     well.append(age);
@@ -101,15 +101,23 @@ $("#find-btn").on("click", function(event){
 		queryURL+="&sex="+animalSex;
 	}
 	queryURL+="&location="+zipCode+"&callback=?";
-  console.log(queryURL);
+  
 	$.getJSON(queryURL)
   .done(function(petApiData) { 
-  	//console.log(petApiData.petfinder.pets); 
-  	var pets = petApiData.petfinder.pets.pet;
+    debug=petApiData;
+    console.log(petApiData);
+  	if(petApiData.petfinder.pets !== undefined){
+      pets = petApiData.petfinder.pets.pet;
+      $.each(pets, function(index, value){
+      createWellForResult(index, value);
+      });
+    } 
+    else{
+      $("#results-panel").html("No results. Please try again.");
+    }
   	
-  	$.each(pets, function(index, value){
-  		createWellForResult(index, value);
-  	});
+  	
+  	
   });
 
 });
