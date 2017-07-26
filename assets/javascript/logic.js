@@ -1,4 +1,4 @@
-
+firebase.initializeApp(config);
 
 var queryURL = "http://api.petfinder.com/pet.find";
 var key = "e5945be700ddfa206a0f57f1f6066743";
