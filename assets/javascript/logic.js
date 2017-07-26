@@ -39,6 +39,9 @@ var createWellForResult = function(index, pet){
     var mix = $("<h3>");
     mix.html("Mix Breed: "+pet.mix.$t);
 
+    var about = $("<p>");
+    about.html("About: " + pet.description.$t);
+
     var email = $("<h3>");
     email.css("font-weight", "bold");
     //console.log(pet);
@@ -55,6 +58,7 @@ var createWellForResult = function(index, pet){
     well.append(sex);
     well.append(breed);
     well.append(mix);
+    well.append(about);
     well.append(email);
     well.append(phone);
 	$("#results-panel").append(well);
@@ -76,6 +80,7 @@ $("#find-btn").on("click", function(event){
   var animalType="";
   var animalSize="";
   var animalSex="";
+
   var zipCode="";
   queryURL += key;
   
