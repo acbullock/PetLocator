@@ -7,7 +7,7 @@ var userID = "";
 var userEmail="";
 var userRef ="";
 var pets=[];
-
+var userName = "";
 var database = null;
 
 //TO DO: GET FROM FIREBASE AUTHENTICATION (GET CURRENT USER)
@@ -24,17 +24,32 @@ firebase.auth().onAuthStateChanged(function(user) {
   	console.log(user);
     $("#btn-logOut").show();
     $("#btn-logIn").hide();
-    $("#loggedInLabel").html("Logged in as " + user.email);
+   
     $("#loggedInLabel").show();
     $("#locatorRow").show();
+
+    // sets the lable for favorites as the user name 
+    
+
+
     //Set user variables if user exists..
     userID=user.uid
     userEmail = user.email;
     userRef = firebase.database().ref("/"+userID);
 
-    //Create user in DB. Save the user's email.
-    userRef.child("email").set(userEmail);
 
+
+    //Create user in DB. Save the user's email.
+    console.log("something " );
+    console.log( user);
+    console.log(user.displayName);
+
+    userRef.child("email").set(userEmail);
+    userRef.child("name").set(user.displayName);
+
+
+    $("#loggedInLabel").html("Logged in as " + user.displayName);
+    $("#favModalLabel").html(user.displayName + "'s Favorites" );
     //set database ref
     database  = firebase.database().ref();
 
@@ -45,7 +60,7 @@ firebase.auth().onAuthStateChanged(function(user) {
       $("#favorites-section").html("");
 
       //Get the current users favorites from the database.
-      var favs =snapshot.val();
+      var favs = snapshot.val();
       //console.log(favs);
 
       //Loop through the faves, and add them to the Fav Modal..
@@ -363,7 +378,7 @@ $("#find-btn").on("click", function(event){
 $("#btnSignUp").on("click", function(e) {
   e.preventDefault();
   var email = $("#formEmailSignUp").val();
-  var name = $("#formNameSignUp").val();
+  userName = $("#formNameSignUp").val();
   var pass = $("#formPassSignUp").val();
 
   console.log(email + " " + pass);
@@ -372,12 +387,27 @@ $("#btnSignUp").on("click", function(e) {
   console.log(promise);
   promise
   .then(function(){
-    
-    promise.displayName = name;
+
+    var user = firebase.auth().currentUser;
+
+    user.updateProfile({
+      displayName: userName
+
+    }).then(function() {
+      // Update successful.
+    }).catch(function(error) {
+      console.log(error.message);
+    });
+   
   })
   .catch(function(e) {
     console.log(e.message);
-  })
+  });
+
+  
+  
+
+
   $("#myModal").modal("hide");
   
 });
