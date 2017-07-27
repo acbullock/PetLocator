@@ -1,3 +1,10 @@
+// TODO: 
+// - signUp logIn validation
+// - email contacnt form
+// - search results crollable 
+// - add a footer
+
+
 firebase.initializeApp(config);
 
 //VARIABLES
@@ -389,7 +396,6 @@ $("#btnSignUp").on("click", function(e) {
   .then(function(){
 
     var user = firebase.auth().currentUser;
-
     user.updateProfile({
       displayName: userName
 
@@ -399,6 +405,7 @@ $("#btnSignUp").on("click", function(e) {
       console.log(error.message);
     });
    
+   $("#myModal").modal("hide");
   })
   .catch(function(e) {
     console.log(e.message);
@@ -408,7 +415,7 @@ $("#btnSignUp").on("click", function(e) {
   
 
 
-  $("#myModal").modal("hide");
+  
   
 });
 
@@ -428,11 +435,15 @@ $("#btnLogIn").on("click", function(e) {
 
   var promise = firebase.auth().signInWithEmailAndPassword(email, pass);
   promise
+  .then (function() { 
+    $("#myModal").modal("hide");
+  })
   .catch(function(e) {
     alert(e.message);
-    
-  })
-  $("#myModal").modal("hide");
+  });
+
+  
+  
   
 });
 
