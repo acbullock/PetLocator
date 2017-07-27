@@ -21,9 +21,11 @@ var database = null;
 // ****************************
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
+  	console.log(user);
     $("#btn-logOut").show();
     $("#btn-logIn").hide();
-
+    $("#loggedInLabel").html("Logged in as " + user.email);
+    $("#loggedInLabel").show();
     $("#locatorRow").show();
     //Set user variables if user exists..
     userID=user.uid
@@ -139,6 +141,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     $("#btn-logOut").hide();
     $("#btn-logIn").show();
     $("#locatorRow").hide();
+    $("#loggedInLabel").hide();
     //when no user, show the sign-in modal
     //empty the previous user's results/favorites.
     $("#myModal").modal('show');
