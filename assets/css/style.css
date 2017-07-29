@@ -40,3 +40,9 @@ body {
 background-image: url("../images/petlove.jpg");
 
 }
+.errorMsg{
+  color:red;
+}
+#find-btn{
+  margin-bottom:10px;
+}

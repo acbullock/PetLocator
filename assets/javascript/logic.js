@@ -14,7 +14,6 @@ var userID = "";
 var userEmail="";
 var userRef ="";
 var pets=[];
-var userName = "";
 var database = null;
 
 //TO DO: GET FROM FIREBASE AUTHENTICATION (GET CURRENT USER)
@@ -49,14 +48,17 @@ firebase.auth().onAuthStateChanged(function(user) {
     //Create user in DB. Save the user's email.
     console.log("something " );
     console.log( user);
-    console.log(user.displayName);
-
+    
     userRef.child("email").set(userEmail);
     userRef.child("name").set(user.displayName);
 
-
-    $("#loggedInLabel").html("Logged in as " + user.displayName);
-    $("#favModalLabel").html(user.displayName + "'s Favorites" );
+   
+   	$("#loggedInLabel").html("Logged in as " + userEmail);
+    
+    var favHeader = $("<h2>");
+    favHeader.css("font-weight", "bold");
+    favHeader.html(userEmail + "'s Favorites" );
+    $("#favModalLabel").html(favHeader);
     //set database ref
     database  = firebase.database().ref();
 
@@ -136,10 +138,95 @@ firebase.auth().onAuthStateChanged(function(user) {
           var rem = $(this).attr("data-key");
           userRef.child("favorites").child(rem).remove();
         });
+        removeBtn.css("margin-bottom", "10px");
+
+        var contactBtn = $("<button>");
+        contactBtn.text("Contact");
+        contactBtn.addClass(" btn btn-info");
+        contactBtn.attr("data-key", name);
+        contactBtn.css("margin-right", "10px");
+        contactBtn.css("margin-bottom", "10px");
+
+        var contactForm = $("<form>");
+        
+        var formGroupDiv = $("<div>");
+        formGroupDiv.addClass("form-group");
+
+        contactForm.append(formGroupDiv);
+        contactForm.css("border-width", "1px");
+        contactForm.css("border-style", "inset");
+        contactForm.attr("id", "form-"+name);
+        contactForm.hide();
+
+        contactBtn.on("click", function(event){
+        	event.preventDefault();
+        	var key = $(this).attr("data-key");
+        	//$("[data-key = "+name+"]").show();
+        	$("#form-"+name).show();
+        	//[href='default.htm']
+        });
+
+        var toLabel = $("<label>");
+        toLabel.html("To:");
+        var toInput = $("<input>");
+        toInput.addClass("form-control");
+        toInput.val(email);
+
+
+        var subjectLabel = $("<label>");
+        subjectLabel.html("Subject:");
+        var subjectInput = $("<input>");
+        subjectInput.addClass("form-control");
+        subjectInput.val("Hi, I am interested in one of your pets");
+
+        var msgLabel = $("<label>");
+        msgLabel.html("Message:");
+        var msgArea = $("<textarea>");
+        msgArea.addClass("form-control");
+        msgArea.val("Hi I am looking to get more information on "+ name + ".");
+
+        var sendBtn = $("<button>");
+        sendBtn.addClass("btn btn-success");
+        sendBtn.html("Send Message");
+        sendBtn.css("margin-right", "10px");
+        sendBtn.css("margin-botom", "10px");
+        sendBtn.on("click", function(event){
+        	event.preventDefault();
+        	emailjs.send("gmail","template_LtXd8EpM",{
+  				from_name: userEmail,
+  				subject: subjectInput.val(),
+  				message_html: msgArea.val()
+			});
+			$("#form-"+name).hide();
+
+
+        });
+
+        var closeBtn = $("<button>");
+        closeBtn.addClass("btn btn-warning");
+        closeBtn.html("Close");
+        closeBtn.on("click", function(event){
+        	event.preventDefault();
+        	$("#form-"+name).hide();
+        });
+
+        formGroupDiv.append(toLabel);
+        formGroupDiv.append(toInput);
+
+        formGroupDiv.append(subjectLabel);
+        formGroupDiv.append(subjectInput);
+        formGroupDiv.append(msgLabel);
+        formGroupDiv.append(msgArea);
+        formGroupDiv.append($("<br>"));
+        formGroupDiv.append(sendBtn);
+        formGroupDiv.append(closeBtn);
+        formGroupDiv.css("padding", "10px");
+        well.append(contactBtn);
+        well.append(contactForm);
 
         //Add the remove button to the well..
         well.append(removeBtn );
-        well.append($("<br>"));
+        well.append($("<hr>"));
         well.append($("<br>"));
 
         //append all the favorite info to the well..
@@ -152,9 +239,14 @@ firebase.auth().onAuthStateChanged(function(user) {
         well.append(aboutHeader);
         well.append(emailHeader);
         well.append(phoneHeader);
+
+        well.css("background-color", "#444444");
+        well.css("color", "#ffffff");
  
         //append the current well to the favModal.
         $("#favorites-section").append(well);
+        $("#favorites-section").append($("<br>"));
+        $("#favorites-section").append($("<br>"));
 
       });
     });
@@ -384,8 +476,9 @@ $("#find-btn").on("click", function(event){
 // ****************************
 $("#btnSignUp").on("click", function(e) {
   e.preventDefault();
+
   var email = $("#formEmailSignUp").val();
-  userName = $("#formNameSignUp").val();
+  
   var pass = $("#formPassSignUp").val();
 
   console.log(email + " " + pass);
@@ -395,19 +488,13 @@ $("#btnSignUp").on("click", function(e) {
   promise
   .then(function(){
 
-    var user = firebase.auth().currentUser;
-    user.updateProfile({
-      displayName: userName
-
-    }).then(function() {
-      // Update successful.
-    }).catch(function(error) {
-      console.log(error.message);
-    });
+    
+    
    
    $("#myModal").modal("hide");
   })
   .catch(function(e) {
+  	$(".errorMsg").html(e.message);
     console.log(e.message);
   });
 
@@ -418,6 +505,11 @@ $("#btnSignUp").on("click", function(e) {
   
   
 });
+
+
+	
+
+
 
 // ****************************
 // creates event for the log in 
@@ -439,7 +531,8 @@ $("#btnLogIn").on("click", function(e) {
     $("#myModal").modal("hide");
   })
   .catch(function(e) {
-    alert(e.message);
+  	$(".errorMsg").html(e.message);
+    //alert(e.message);
   });
 
   
