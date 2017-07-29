@@ -240,9 +240,9 @@ firebase.auth().onAuthStateChanged(function(user) {
         well.append(emailHeader);
         well.append(phoneHeader);
 
-        well.css("background-color", "#444444");
-        well.css("color", "#ffffff");
- 
+        well.css("background-color", "#87A257");
+  		well.css("color", "#F4F2F1");
+
         //append the current well to the favModal.
         $("#favorites-section").append(well);
         $("#favorites-section").append($("<br>"));
@@ -388,6 +388,8 @@ var createWellForResult = function(index, pet){
   well.append(email);
   well.append(phone);
   well.append(favButton);
+  well.css("background-color", "#87A257");
+  well.css("color", "white");
 
   //add the well to the results panel..
 	$("#results-panel").append(well);
@@ -417,12 +419,15 @@ $("#find-btn").on("click", function(event){
   var animalType="";
   var animalSize="";
   var animalSex="";
-
+  var busyBox = $("<img>");
+  busyBox.attr("src", "assets/images/loading.gif");
+  busyBox.addClass("col-md-12");
   var zipCode="";
   queryURL += key;
   
 	//empty current resutls every time a user does a new search
-  $("#results-panel").html("");
+  $("#results-panel").html(busyBox);
+
   //retreive the search criteria..
 	animalType = $("#animal-type-input").val().trim();
 	animalSize = $("#animal-size-input").val().trim();
@@ -442,10 +447,10 @@ $("#find-btn").on("click", function(event){
 
   //finish building query..
 	queryURL+="&location="+zipCode+"&callback=?";
-  
+  	
 	$.getJSON(queryURL)
   .done(function(petApiData) { 
-    
+    $("#results-panel").html("");
   	if(petApiData.petfinder.pets !== undefined){
       pets = petApiData.petfinder.pets.pet;
       $.each(pets, function(index, value){
