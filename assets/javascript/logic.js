@@ -26,7 +26,7 @@ var database = null;
 // ****************************
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-  	console.log(user);
+  	console.log("asdfasdf"+user);
     $("#btn-logOut").show();
     $("#btn-logIn").hide();
    
@@ -49,11 +49,14 @@ firebase.auth().onAuthStateChanged(function(user) {
     console.log( user);
     
     userRef.child("email").set(userEmail);
-    userRef.child("name").set(user.displayName);
+    //userRef.child("name").set(user.displayName);
 
    	$("#loggedInLabel").addClass("text-info");
    	$("#loggedInLabel").html("Logged in as " + userEmail);
     
+
+    //===================
+    //start building user's favorites modal..
     var favHeader = $("<h2>");
     favHeader.css("font-weight", "bold");
     favHeader.html(userEmail + "'s Favorites" );
@@ -162,7 +165,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         contactBtn.on("click", function(event){
         	event.preventDefault();
         	var key = $(this).attr("data-key");
-        	$("[id='"+index+"']").show();
+        	$("[id='"+index+"']").show(400);
         	//$("#form-"+name).show();
         	//[href='default.htm']
         });
@@ -214,7 +217,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         closeBtn.html("Close");
         closeBtn.on("click", function(event){
         	event.preventDefault();
-        	$("[id='"+index+"']").hide();
+        	$("[id='"+index+"']").hide(400);
         	
         });
 
@@ -334,9 +337,11 @@ var createWellForResult = function(index, pet){
  	if(pet.media.photos!== undefined){
  		for(var i = 1; i < pet.media.photos.photo.length; i+=5){
   			var photo = $("<img>");
+  			photo.addClass("img-thumbnail");
   			photo.css("height", "150px");
 		    photo.attr("src", pet.media.photos.photo[i].$t);
 		    photo.css("padding", "10px");
+		    photo.css("margin", "0 10px");
 		    well.append(photo);
   		}
 
@@ -379,6 +384,14 @@ var createWellForResult = function(index, pet){
   }
   phone.html(" Phone: "+phoneText);
 
+
+  //create label to let user know fav was added..
+  var addedLabel = $("<label>");
+  addedLabel.addClass("text-success");
+  addedLabel.html("  " + pet.name.$t+" has been added to your favorites!");
+  addedLabel.hide();
+
+
   var favButton = $("<button>");
   favButton.addClass("btn btn-warning fav-btn");
   favButton.text("Add to Favorites!")
@@ -387,16 +400,13 @@ var createWellForResult = function(index, pet){
   favButton.on("click", function(){
     //call function that adds to firebase
     addFavorite(pets, index);
+    $(this).hide(500);	
     //todo: catch error
-    addedLabel.show();
+    addedLabel.show(500);
 
   });
 
-  //create label to let user know fav was added..
-  var addedLabel = $("<label>");
-  addedLabel.addClass("text-success");
-  addedLabel.html("  " + pet.name.$t+" has been added to your favorites!");
-  addedLabel.hide();
+  
   //add everything to the well..
   well.append(nameHeader);
   well.append(age);
@@ -440,8 +450,10 @@ $("#find-btn").on("click", function(event){
   var animalSize="";
   var animalSex="";
   var busyBox = $("<img>");
+
   busyBox.attr("src", "assets/images/loading.gif");
   busyBox.addClass("col-md-12");
+
   var zipCode="";
   queryURL += key;
   
@@ -471,6 +483,7 @@ $("#find-btn").on("click", function(event){
 	$.getJSON(queryURL)
   .done(function(petApiData) { 
     $("#results-panel").html("");
+    console.log(petApiData);
   	if(petApiData.petfinder.pets !== undefined){
       pets = petApiData.petfinder.pets.pet;
       $.each(pets, function(index, value){

@@ -32,6 +32,9 @@
 							<button type="button" class="btn btn-default navbar-btn" id="btn-logIn">Log in</button>
 							<label type="text" id="loggedInLabel"></label>
 					  		<button type="button" class="btn btn-default navbar-btn" id="btn-logOut">Log out</button>
+
+					  		<button id="view-fav-btn" type="button" class="btn btn-info" data-toggle="modal" data-target="#favModal">View Favorites</button>
+
 						</div>
 				  	</div>
 				</nav>
@@ -96,15 +99,15 @@
 								
 							</div>
 							<hr/>
-							<div class="btn-group text-center">
+							<div id="find-and-clear" class="btn-group">
 							<button id="find-btn" class="btn btn-primary btn-block">
 								<span class="glyphicon glyphicon-search"></span>
 								<span> Find Pets!</span>
 							</button>
 							<button id="clear-btn" class="btn-block btn btn-default">Clear Search Results</button></div><br/><br/>
-							<hr/>
+							
 							<div>
-								<button id="view-fav-btn" type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#favModal">View Favorites</button>
+								
 								<!-- Modal -->
 								<div class="modal fade" id="favModal" tabindex="-1" role="dialog" aria-labelledby="favModalLabel">
 								  <div class="modal-dialog" role="document">
