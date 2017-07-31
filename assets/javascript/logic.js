@@ -1,10 +1,9 @@
-// TODO: 
-// - signUp logIn validation
-// - email contacnt form
-// - search results crollable 
-// - add a footer
+// TODO:  
+// - add a footer - Giscard
+//nav bar with View Favorites as a link that pops up the modal - Giscard
+//replace loading gif with glyphicon that we animate in css with "spin"
 
-
+//refactor search and favs code (remove duplicates) - Alex
 firebase.initializeApp(config);
 
 //VARIABLES
@@ -16,10 +15,10 @@ var userRef ="";
 var pets=[];
 var database = null;
 
-//TO DO: GET FROM FIREBASE AUTHENTICATION (GET CURRENT USER)
+//
 // ****************************
 // if user is logged in then it should import history
-// and show to screen
+// 
 // TODO: 
 // - if user is logged in have variables from that user with the 
 //   history
@@ -39,7 +38,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 
     //Set user variables if user exists..
-    userID=user.uid
+    userID=user.uid;
     userEmail = user.email;
     userRef = firebase.database().ref("/"+userID);
 
@@ -52,7 +51,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     userRef.child("email").set(userEmail);
     userRef.child("name").set(user.displayName);
 
-   
+   	$("#loggedInLabel").addClass("text-info");
    	$("#loggedInLabel").html("Logged in as " + userEmail);
     
     var favHeader = $("<h2>");
@@ -94,6 +93,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         well.addClass("well");
 
         var img = $("<img>");
+        img.css("height", "150px");
         //only set image if it exists..
         userRef.child("favorites").child(name).child("photo").once("value").then(function(snapshot){
           img.attr("src", snapshot.val());
@@ -121,6 +121,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
         var emailHeader = $("<h3>");
         emailHeader.css("font-weight", "bold");
+        emailHeader.css("overflow", "hidden");
         emailHeader.html("Email: "+email);
 
         var phoneHeader = $("<h3>");
@@ -155,14 +156,14 @@ firebase.auth().onAuthStateChanged(function(user) {
         contactForm.append(formGroupDiv);
         contactForm.css("border-width", "1px");
         contactForm.css("border-style", "inset");
-        contactForm.attr("id", "form-"+name);
+        contactForm.attr("id", index);
         contactForm.hide();
 
         contactBtn.on("click", function(event){
         	event.preventDefault();
         	var key = $(this).attr("data-key");
-        	//$("[data-key = "+name+"]").show();
-        	$("#form-"+name).show();
+        	$("[id='"+index+"']").show();
+        	//$("#form-"+name).show();
         	//[href='default.htm']
         });
 
@@ -185,8 +186,13 @@ firebase.auth().onAuthStateChanged(function(user) {
         msgArea.addClass("form-control");
         msgArea.val("Hi I am looking to get more information on "+ name + ".");
 
+        var sentMsgLabel = $("<label>");
+        sentMsgLabel.addClass("text-success");
+        sentMsgLabel.html("Message sent.");
+        sentMsgLabel.hide();
+
         var sendBtn = $("<button>");
-        sendBtn.addClass("btn btn-success");
+        sendBtn.addClass("btn btn-warning");
         sendBtn.html("Send Message");
         sendBtn.css("margin-right", "10px");
         sendBtn.css("margin-botom", "10px");
@@ -197,19 +203,22 @@ firebase.auth().onAuthStateChanged(function(user) {
   				subject: subjectInput.val(),
   				message_html: msgArea.val()
 			});
+			sentMsgLabel.show();
 			$("#form-"+name).hide();
 
 
         });
 
         var closeBtn = $("<button>");
-        closeBtn.addClass("btn btn-warning");
+        closeBtn.addClass("btn btn-default");
         closeBtn.html("Close");
         closeBtn.on("click", function(event){
         	event.preventDefault();
-        	$("#form-"+name).hide();
+        	$("[id='"+index+"']").hide();
+        	
         });
 
+        
         formGroupDiv.append(toLabel);
         formGroupDiv.append(toInput);
 
@@ -220,6 +229,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         formGroupDiv.append($("<br>"));
         formGroupDiv.append(sendBtn);
         formGroupDiv.append(closeBtn);
+        formGroupDiv.append(sentMsgLabel);
         formGroupDiv.css("padding", "10px");
         well.append(contactBtn);
         well.append(contactForm);
@@ -240,8 +250,8 @@ firebase.auth().onAuthStateChanged(function(user) {
         well.append(emailHeader);
         well.append(phoneHeader);
 
-        well.css("background-color", "#87A257");
-  		well.css("color", "#F4F2F1");
+        //well.css("background-color", "#87A257");
+  		//well.css("color", "#F4F2F1");
 
         //append the current well to the favModal.
         $("#favorites-section").append(well);
@@ -314,7 +324,7 @@ var createWellForResult = function(index, pet){
 
   //display which # result it is..
 	var number = $("<label>");
-  number.addClass("fa-stack fa-lg");
+	number.addClass("fa-stack fa-lg");
   number.append($("<i class='fa fa-square fa-stack-2x'></i>"));
   number.append($("<i class='fa fa-inverse fa-stack-1x'>"+(index+1)+"</i>"));
   //append to well..
@@ -324,6 +334,7 @@ var createWellForResult = function(index, pet){
  	if(pet.media.photos!== undefined){
  		for(var i = 1; i < pet.media.photos.photo.length; i+=5){
   			var photo = $("<img>");
+  			photo.css("height", "150px");
 		    photo.attr("src", pet.media.photos.photo[i].$t);
 		    photo.css("padding", "10px");
 		    well.append(photo);
@@ -369,15 +380,23 @@ var createWellForResult = function(index, pet){
   phone.html(" Phone: "+phoneText);
 
   var favButton = $("<button>");
-  favButton.addClass("btn btn-info fav-btn");
+  favButton.addClass("btn btn-warning fav-btn");
   favButton.text("Add to Favorites!")
   favButton.attr("data-index", index);
   
   favButton.on("click", function(){
     //call function that adds to firebase
     addFavorite(pets, index);
+    //todo: catch error
+    addedLabel.show();
+
   });
 
+  //create label to let user know fav was added..
+  var addedLabel = $("<label>");
+  addedLabel.addClass("text-success");
+  addedLabel.html("  " + pet.name.$t+" has been added to your favorites!");
+  addedLabel.hide();
   //add everything to the well..
   well.append(nameHeader);
   well.append(age);
@@ -388,8 +407,9 @@ var createWellForResult = function(index, pet){
   well.append(email);
   well.append(phone);
   well.append(favButton);
-  well.css("background-color", "#87A257");
-  well.css("color", "white");
+  well.append(addedLabel);
+  //well.css("background-color", "#87A257");
+  //well.css("color", "white");
 
   //add the well to the results panel..
 	$("#results-panel").append(well);
@@ -499,6 +519,7 @@ $("#btnSignUp").on("click", function(e) {
    $("#myModal").modal("hide");
   })
   .catch(function(e) {
+
   	$(".errorMsg").html(e.message);
     console.log(e.message);
   });

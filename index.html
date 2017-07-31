@@ -36,9 +36,7 @@
 				  	</div>
 				</nav>
 				
-				<div class="jumbotron">
-					<h1 class="text-center"><b>Pet Locator Funhouse</b></h1>
-				</div>
+				
 			</div>
 		</div>
 		<div id="locatorRow" class="row">
@@ -51,7 +49,6 @@
 						<form>
 							<div class="form-group">
 								<label>Animal Type</label>
-									
 								<select class="form-control"  id="animal-type-input">
 									<option>show all</option>
 									<option>barnyard</option>
@@ -100,11 +97,14 @@
 							</div>
 							<hr/>
 							<div class="btn-group text-center">
-							<button id="find-btn" class="btn btn-primary btn-block">Find Pets!</button>
+							<button id="find-btn" class="btn btn-primary btn-block">
+								<span class="glyphicon glyphicon-search"></span>
+								<span> Find Pets!</span>
+							</button>
 							<button id="clear-btn" class="btn-block btn btn-default">Clear Search Results</button></div><br/><br/>
 							<hr/>
 							<div>
-								<button id="view-fav-btn" type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#favModal">View Favorites</button>
+								<button id="view-fav-btn" type="button" class="btn btn-info btn-lg btn-block" data-toggle="modal" data-target="#favModal">View Favorites</button>
 								<!-- Modal -->
 								<div class="modal fade" id="favModal" tabindex="-1" role="dialog" aria-labelledby="favModalLabel">
 								  <div class="modal-dialog" role="document">
@@ -187,7 +187,7 @@
 									<input type="password" class="form-control" id="formPassLogIn" placeholder="Password">
 								</div>
 								<button type="submit" class="btn btn-default" id="btnLogIn">Log in</button>
-								<label class = "errorMsg"></label>
+								<label class = "errorMsg text-danger"></label>
 							</form>
 						</div>
 						<div id="signUp" class="tab-pane fade">
