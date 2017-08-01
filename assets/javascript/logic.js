@@ -1,6 +1,5 @@
 // TODO:  
 // - add a footer - Giscard
-//nav bar with View Favorites as a link that pops up the modal - Giscard
 //replace loading gif with glyphicon that we animate in css with "spin"
 
 //refactor search and favs code (remove duplicates) - Alex
@@ -532,7 +531,7 @@ $("#btnSignUp").on("click", function(e) {
    $("#myModal").modal("hide");
   })
   .catch(function(e) {
-  	
+
   	$(".errorMsg").html(e.message);
     console.log(e.message);
   });
@@ -594,3 +593,14 @@ $("#btn-logOut").on("click", function(e) {
   location.reload();
   
 });
+
+// init controller
+var controller = new ScrollMagic.Controller();
+
+// create a scene
+new ScrollMagic.Scene({
+        duration: 100,    // the scene should last for a scroll distance of 100px
+        offset: 50        // start this scene after scrolling for 50px
+    })
+    .setPin("#results-panel") // pins the element for the the scene's duration
+    .addTo(controller); // assign the scene to the controller

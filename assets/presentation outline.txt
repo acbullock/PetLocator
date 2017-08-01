@@ -19,11 +19,13 @@ Demonstration:
 
 1. log in with pre-existing user, show that user's favorites with "view favorites"
 2. log out, log in with invalid credentials (show authentication validation)
+2.5 user stays logged in until they log out.. (show new tab and they are logged in)
 3. create new user (show validation - on email and pass, show firebase users got updated, show uid in database)
 4. show favorites is empty..
 5. show a search (show optional/required params)
 6. add to favorites.. (show that "view favorites" modal is updated, and firebase db is updated)
 7. go to favorites, show we can send an email - it's pre-populated with a message, and is editable.. (change To field, and show email functionality actually works)
+
 
 
 
