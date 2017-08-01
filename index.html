@@ -12,6 +12,7 @@
     <script src="https://smtpjs.com/smtp.js"></script>
       <link rel="stylesheet" href="assets/css/font-awesome-4.7.0/css/font-awesome.min.css" >
 <link rel="stylesheet" text="text/css" href="assets/css/style.css">
+       
     <!-- Firebase Reference -->
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
@@ -29,12 +30,14 @@
 				<nav class="navbar navbar-default">
 				  	<div class="container-fluid">
 						<div class="navbar-header">
+
 							<button type="button" class="btn btn-default navbar-btn" id="btn-logIn">Log in</button>
 							<label type="text" id="loggedInLabel"></label>
+							<button id="view-fav-btn" type="button" class="btn btn-info" data-toggle="modal" data-target="#favModal">View Favorites</button>
+
 					  		<button type="button" class="btn btn-default navbar-btn" id="btn-logOut">Log out</button>
 
-					  		<button id="view-fav-btn" type="button" class="btn btn-info" data-toggle="modal" data-target="#favModal">View Favorites</button>
-
+					  		
 						</div>
 				  	</div>
 				</nav>

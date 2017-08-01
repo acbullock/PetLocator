@@ -341,7 +341,7 @@ var createWellForResult = function(index, pet){
   			photo.css("height", "150px");
 		    photo.attr("src", pet.media.photos.photo[i].$t);
 		    photo.css("padding", "10px");
-		    photo.css("margin", "0 10px");
+		    photo.css("margin", "10px");
 		    well.append(photo);
   		}
 
@@ -478,7 +478,7 @@ $("#find-btn").on("click", function(event){
 	}
 
   //finish building query..
-	queryURL+="&location="+zipCode+"&callback=?";
+	queryURL+="&location="+zipCode+"&count=5&callback=?";
   	
 	$.getJSON(queryURL)
   .done(function(petApiData) { 
@@ -532,7 +532,7 @@ $("#btnSignUp").on("click", function(e) {
    $("#myModal").modal("hide");
   })
   .catch(function(e) {
-
+  	
   	$(".errorMsg").html(e.message);
     console.log(e.message);
   });
