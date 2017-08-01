@@ -451,8 +451,8 @@ $("#find-btn").on("click", function(event){
   var animalSex="";
   var busyBox = $("<img>");
 
-  busyBox.attr("src", "assets/images/loading.gif");
-  busyBox.addClass("col-md-12");
+  busyBox.attr("src", "assets/images/petloading.gif");
+  busyBox.css("img-thumbnail", );
 
   var zipCode="";
   queryURL += key;
