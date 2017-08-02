@@ -51,7 +51,12 @@ firebase.auth().onAuthStateChanged(function(user) {
     //userRef.child("name").set(user.displayName);
 
    	$("#loggedInLabel").addClass("text-info");
-   	$("#loggedInLabel").html("Logged in as " + userEmail);
+   	var labelSpan1 = $("<span>");
+   	labelSpan1.addClass("glyphicon	glyphicon-user");
+   	var labelSpan2 = $("<span>");
+   	labelSpan2.html(" "+userEmail);
+   	$("#loggedInLabel").html(labelSpan1);
+   	$("#loggedInLabel").append(labelSpan2);		
     
 
     //===================
@@ -164,7 +169,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         contactBtn.on("click", function(event){
         	event.preventDefault();
         	var key = $(this).attr("data-key");
-        	$("[id='"+index+"']").show(400);
+        	$("[id='"+index+"']").toggle(400);
         	//$("#form-"+name).show();
         	//[href='default.htm']
         });
@@ -451,8 +456,8 @@ $("#find-btn").on("click", function(event){
   var busyBox = $("<img>");
 
   busyBox.attr("src", "assets/images/petloading.gif");
-  busyBox.css("img-thumbnail", );
-
+  busyBox.addClass("col-md-12 float-center");
+  busyBox.css("float", "33%");
   var zipCode="";
   queryURL += key;
   
