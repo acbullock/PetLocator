@@ -90,6 +90,25 @@ background-image: url("../images/Firefly.gif");
   min-height:500px;
 }
 
+
+.btn:hover {
+  
+ display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px transparent;
+}
+.btn:hover, .btn:focus, .btn:active {
+  -webkit-animation-name: hvr-wobble-to-top-right;
+  animation-name: hvr-wobble-to-top-right;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+    transform: scale(1.1);
 /*
 =======
 /*@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700");/*!
