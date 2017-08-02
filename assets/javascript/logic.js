@@ -1,6 +1,5 @@
 // TODO:  
 // - add a footer - Giscard
-//nav bar with View Favorites as a link that pops up the modal - Giscard
 //replace loading gif with glyphicon that we animate in css with "spin"
 
 //refactor search and favs code (remove duplicates) - Alex
@@ -341,7 +340,7 @@ var createWellForResult = function(index, pet){
   			photo.css("height", "150px");
 		    photo.attr("src", pet.media.photos.photo[i].$t);
 		    photo.css("padding", "10px");
-		    photo.css("margin", "0 10px");
+		    photo.css("margin", "10px");
 		    well.append(photo);
   		}
 
@@ -478,7 +477,7 @@ $("#find-btn").on("click", function(event){
 	}
 
   //finish building query..
-	queryURL+="&location="+zipCode+"&callback=?";
+	queryURL+="&location="+zipCode+"&count=5&callback=?";
   	
 	$.getJSON(queryURL)
   .done(function(petApiData) { 
@@ -594,3 +593,14 @@ $("#btn-logOut").on("click", function(e) {
   location.reload();
   
 });
+
+// init controller
+var controller = new ScrollMagic.Controller();
+
+// create a scene
+new ScrollMagic.Scene({
+        duration: 100,    // the scene should last for a scroll distance of 100px
+        offset: 50        // start this scene after scrolling for 50px
+    })
+    .setPin("#results-panel") // pins the element for the the scene's duration
+    .addTo(controller); // assign the scene to the controller
