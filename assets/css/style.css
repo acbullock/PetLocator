@@ -5,6 +5,9 @@
     }
 }
 
+.requiredText {
+  color: red;
+}
 
 
 body {
