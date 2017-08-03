@@ -9,7 +9,10 @@
   color: red;
 }
 
-
+.icon {
+  height: 50px;
+    width: 50px;
+}
 body {
 
 background-image: url("../images/Firefly.gif");
