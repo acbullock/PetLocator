@@ -32,7 +32,7 @@ firebase.auth().onAuthStateChanged(function(user) {
    
     $("#loggedInLabel").show();
     $("#locatorRow").show();
-
+    $("#view-fav-btn").show();
     // sets the lable for favorites as the user name 
     
 
@@ -275,6 +275,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     $("#btn-logIn").show();
     $("#locatorRow").hide();
     $("#loggedInLabel").hide();
+    $("#view-fav-btn").hide();
     //when no user, show the sign-in modal
     //empty the previous user's results/favorites.
     $("#myModal").modal('show');
