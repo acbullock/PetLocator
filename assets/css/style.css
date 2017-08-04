@@ -71,8 +71,8 @@ background-image: url("../images/Firefly.gif");
   box-shadow: 0 0 1px transparent;
 }
 .btn:hover, .btn:focus, .btn:active {
-  -webkit-animation-name: hvr-wobble-to-top-right;
-  animation-name: hvr-wobble-to-top-right;
+  -webkit-animation-name: hvr-shutter-out-horizontal;
+  animation-name: hvr-shutter-out-horizontal;
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-timing-function: ease-in-out;

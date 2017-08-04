@@ -1,10 +1,14 @@
-console.log("imrdy");
 
+
+
+ 
 //On initial load, the find button is disabled.
 $("#submit-btn-phone").prop("disabled", true);
 $("#submit-btn-email").prop("disabled", true);
+
 //only enable the find button when a valid zip is entered.
 document.onkeyup = function(){
+
 	if ( $("#contactUsFormName").val().trim() !== "" &&  $("#contactUsFormEmail").val().trim() && $("#contactUsFormText").val().trim()) {
   		$("#submit-btn-email").prop("disabled", false);
 
@@ -57,13 +61,14 @@ $("#submit-btn-phone").on("click", function(e) {
 
 $("#submit-btn-email").on("click", function(e) {
 	e.preventDefault();
+	//the "to" is currently hard coded to alex's email (in emailjs template)
 	emailjs.send("gmail","template_LtXd8EpM",{
-  				from_name: "aleksey89col@gmail.com",
+  				from_name: $("#contactUsFormEmail").val().trim(),
   				subject: $("#contactUsFormName").val().trim() + " " + $("#contactUsFormEmail").val().trim(),
   				message_html: $("#contactUsFormText").val().trim()
 			});
 	console.log("we send an email");
-	$("#contactUsFormName").val();
-	$("#contactUsFormEmail").val();
-	$("#contactUsFormText").val();
+	// $("#contactUsFormName").val("");
+	// $("#contactUsFormEmail").val("");
+	// $("#contactUsFormText").val("");
 });

@@ -25,6 +25,7 @@ var database = null;
 // ****************************
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
+
   	console.log("asdfasdf"+user);
     $("#btn-logOut").show();
     $("#btn-logIn").hide();
@@ -40,7 +41,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     userID=user.uid;
     userEmail = user.email;
     userRef = firebase.database().ref("/"+userID);
-
+    $("#contactUsFormEmail").val(userEmail);
 
 
     //Create user in DB. Save the user's email.
@@ -205,6 +206,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         sendBtn.css("margin-botom", "10px");
         sendBtn.on("click", function(event){
         	event.preventDefault();
+          //the "to" is hard coded in email js template..
         	emailjs.send("gmail","template_LtXd8EpM",{
   				from_name: userEmail,
   				subject: subjectInput.val(),

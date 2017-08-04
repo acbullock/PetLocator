@@ -31,3 +31,7 @@ Demonstration:
 
 to do in the future..: history of emails, add pets to db based off unique id and not name, have search results dynamically update if each result is a favorite..
 
+fb/twitter page links that work..
+
+map..
+
