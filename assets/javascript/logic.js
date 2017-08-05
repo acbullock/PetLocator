@@ -194,10 +194,12 @@ firebase.auth().onAuthStateChanged(function(user) {
         msgArea.addClass("form-control");
         msgArea.val("Hi I am looking to get more information on "+ name + ".");
 
-        var sentMsgLabel = $("<label>");
-        sentMsgLabel.addClass("text-success");
-        sentMsgLabel.html("Message sent.");
-        sentMsgLabel.hide();
+        var sentMsgAlert = $("<div>");
+        sentMsgAlert.addClass("alert alert-success alert-dismissable fade in");
+        sentMsgAlert.html($("<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"));
+        sentMsgAlert.append($("<strong>Message sent</strong>"));
+        sentMsgAlert.css("margin-top", "10px");
+        sentMsgAlert.hide();
 
         var sendBtn = $("<button>");
         sendBtn.addClass("btn btn-warning");
@@ -208,11 +210,16 @@ firebase.auth().onAuthStateChanged(function(user) {
         	event.preventDefault();
           //the "to" is hard coded in email js template..
         	emailjs.send("gmail","template_LtXd8EpM",{
+            //grab this from the form to get lister email..
+          to_name: "lexliveslife@gmail.com",
   				from_name: userEmail,
   				subject: subjectInput.val(),
   				message_html: msgArea.val()
+
+
 			});
-			sentMsgLabel.show();
+
+			sentMsgAlert.show();
 			$("#form-"+name).hide();
 
 
@@ -238,7 +245,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         formGroupDiv.append($("<br>"));
         formGroupDiv.append(sendBtn);
         formGroupDiv.append(closeBtn);
-        formGroupDiv.append(sentMsgLabel);
+        formGroupDiv.append(sentMsgAlert);
         formGroupDiv.css("padding", "10px");
         well.append(contactBtn);
         well.append(contactForm);

@@ -60,9 +60,12 @@ $("#submit-btn-phone").on("click", function(e) {
 });
 
 $("#submit-btn-email").on("click", function(e) {
+	var adminEmail = "lexliveslife@gmail.com";
 	e.preventDefault();
 	//the "to" is currently hard coded to alex's email (in emailjs template)
 	emailjs.send("gmail","template_LtXd8EpM",{
+
+				to_name: adminEmail,
   				from_name: $("#contactUsFormEmail").val().trim(),
   				subject: $("#contactUsFormName").val().trim() + " " + $("#contactUsFormEmail").val().trim(),
   				message_html: $("#contactUsFormText").val().trim()
